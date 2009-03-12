@@ -558,6 +558,10 @@ void weapon_railgun_fire (gentity_t *ent) {
 		ent->client->accuracy_hits++;
 	}
 
+
+	if ( hits > 1 ) {
+		ent->client->ps.persistant[PERS_PLAYEREVENTS] ^= PLAYEREVENT_KEBAB;
+	}
 }
 
 
