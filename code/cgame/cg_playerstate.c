@@ -410,7 +410,7 @@ void CG_CheckLocalSounds( playerState_t *ps, playerState_t *ops ) {
 		}
 		else if ((ps->persistant[PERS_PLAYEREVENTS] & PLAYEREVENT_KEBAB) !=
 				(ops->persistant[PERS_PLAYEREVENTS] & PLAYEREVENT_KEBAB)) {
-			trap_S_StartLocalSound( cgs.media.holyShitSound, CHAN_ANNOUNCER );
+			trap_S_StartLocalSound( cgs.media.kebabageSound, CHAN_ANNOUNCER );
 			Com_Printf("kebabage\n");
 		}
 		reward = qtrue;
