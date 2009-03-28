@@ -829,6 +829,8 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
 #ifdef MISSIONPACK
 	vec3_t		bouncedir, impactpoint;
 #endif
+	vec3_t	dest, height;
+	trace_t	tr;
 
 	if (!targ->takedamage) {
 		return;
@@ -1064,6 +1066,23 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
 			targ->pain (targ, attacker, take);
 		}
 	}
+
+	if (take && mod == MOD_ROCKET ) { 
+		VectorSet( dest, targ->client->ps.origin[0], targ->client->ps.origin[1], targ->client->ps.origin[2] - 4096 );
+		trap_Trace( &tr, targ->client->ps.origin, targ->r.mins, targ->r.maxs, dest, targ->s.number, MASK_SOLID );
+		VectorSubtract( targ->client->ps.origin, tr.endpos, height );
+
+		//G_Printf( "origin: %f,%f,%f end: %f,%f,%f height %f\n", targ->client->ps.origin[0], targ->client->ps.origin[1], targ->client->ps.origin[2], tr.endpos[0], tr.endpos[1], tr.endpos[2], VectorLength(height));
+		//G_Printf( "origin: %f,  %f,  %f height %f\n", targ->client->ps.origin[0], targ->client->ps.origin[1], targ->client->ps.origin[2], VectorLength(height));
+		//G_Printf( "height %f\n", VectorLength(height));
+
+		//50 seems to be the maximum jump height
+		if ( VectorLength(height) > 45 ) {
+			// play aerial on attacker
+			attacker->client->ps.persistant[PERS_PLAYEREVENTS] ^= PLAYEREVENT_AERIALREWARD;
+		}
+	}
+
 
 }
 
