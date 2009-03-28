@@ -896,6 +896,7 @@ typedef struct {
 	sfxHandle_t firstExcellentSound;
 	sfxHandle_t firstHumiliationSound;
 	sfxHandle_t kebabageSound;
+	sfxHandle_t aerialSound;
 
 	sfxHandle_t takenLeadSound;
 	sfxHandle_t tiedLeadSound;

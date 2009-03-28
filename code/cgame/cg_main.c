@@ -659,6 +659,7 @@ static void CG_RegisterSounds( void ) {
 	cgs.media.firstHumiliationSound = trap_S_RegisterSound( "sound/feedback/first_gauntlet.wav", qtrue );
 #endif
 	cgs.media.kebabageSound = trap_S_RegisterSound( "sound/feedback/kebabage.wav", qtrue );
+	cgs.media.kebabageSound = trap_S_RegisterSound( "sound/feedback/aerial.wav", qtrue );
 
 	cgs.media.takenLeadSound = trap_S_RegisterSound( "sound/feedback/takenlead.wav", qtrue);
 	cgs.media.tiedLeadSound = trap_S_RegisterSound( "sound/feedback/tiedlead.wav", qtrue);
