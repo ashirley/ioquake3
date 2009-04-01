@@ -416,7 +416,7 @@ void CG_CheckLocalSounds( playerState_t *ps, playerState_t *ops ) {
 		else if ((ps->persistant[PERS_PLAYEREVENTS] & PLAYEREVENT_AERIALREWARD) !=
 				(ops->persistant[PERS_PLAYEREVENTS] & PLAYEREVENT_AERIALREWARD)) {
 			trap_S_StartLocalSound( cgs.media.aerialSound, CHAN_ANNOUNCER );
-			Com_Printf("kebabage\n");
+			Com_Printf("aerial rocket\n");
 		}
 		reward = qtrue;
 	}
