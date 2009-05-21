@@ -1074,7 +1074,7 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
 
 		//G_Printf( "origin: %f,%f,%f end: %f,%f,%f height %f\n", targ->client->ps.origin[0], targ->client->ps.origin[1], targ->client->ps.origin[2], tr.endpos[0], tr.endpos[1], tr.endpos[2], VectorLength(height));
 		//G_Printf( "origin: %f,  %f,  %f height %f\n", targ->client->ps.origin[0], targ->client->ps.origin[1], targ->client->ps.origin[2], VectorLength(height));
-		//G_Printf( "height %f\n", VectorLength(height));
+		G_Printf( "aerial rocket, not high enough:  %f (surface %d, contents %d)\n", VectorLength(height), tr.surfaceFlags, tr.contents);
 
 		//50 seems to be the maximum jump height
 		if ( VectorLength(height) > 45 ) {
