@@ -1068,19 +1068,36 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
 	}
 
 	if (take && mod == MOD_ROCKET ) { 
-		VectorSet( dest, targ->client->ps.origin[0], targ->client->ps.origin[1], targ->client->ps.origin[2] - 4096 );
-		trap_Trace( &tr, targ->client->ps.origin, targ->r.mins, targ->r.maxs, dest, targ->s.number, MASK_SOLID );
-		VectorSubtract( targ->client->ps.origin, tr.endpos, height );
+		VectorSet( dest, targ->client->ps.origin[0], targ->client->ps.origin[1], targ->client->ps.origin[2] - 45 );
+		trap_Trace( &tr, targ->client->ps.origin, targ->r.mins, targ->r.maxs, dest, targ->s.number, MASK_PLAYERSOLID );
+
+    if (tr.fraction == 1.0) {
+			attacker->client->ps.persistant[PERS_PLAYEREVENTS] ^= PLAYEREVENT_AERIALREWARD;
+		  G_Printf( "aerial rocket, high enough:  %f (surface %d, contents %d, allsolid %d, startsolid %d)\n", VectorLength(height), tr.surfaceFlags, tr.contents, tr.allsolid, tr.startsolid);
+    }
+    else {
+
+		  G_Printf( "aerial rocket, not high enough:  %f (surface %d, contents %d, allsolid %d, startsolid %d)\n", VectorLength(height), tr.surfaceFlags, tr.contents, tr.allsolid, tr.startsolid);
+		  trap_Trace( &tr, targ->client->ps.origin, targ->r.mins, targ->r.maxs, dest, targ->s.number, MASK_SOLID );
+		  G_Printf( "                              :  %f (surface %d, contents %d, allsolid %d, startsolid %d)\n", VectorLength(height), tr.surfaceFlags, tr.contents, tr.allsolid, tr.startsolid);
+
+    }
+      
+
+
+
+
+
+		//VectorSubtract( targ->client->ps.origin, tr.endpos, height );
 
 		//G_Printf( "origin: %f,%f,%f end: %f,%f,%f height %f\n", targ->client->ps.origin[0], targ->client->ps.origin[1], targ->client->ps.origin[2], tr.endpos[0], tr.endpos[1], tr.endpos[2], VectorLength(height));
 		//G_Printf( "origin: %f,  %f,  %f height %f\n", targ->client->ps.origin[0], targ->client->ps.origin[1], targ->client->ps.origin[2], VectorLength(height));
-		G_Printf( "aerial rocket, not high enough:  %f (surface %d, contents %d)\n", VectorLength(height), tr.surfaceFlags, tr.contents);
+		//G_Printf( "aerial rocket, not high enough:  %f (surface %d, contents %d)\n", VectorLength(height), tr.surfaceFlags, tr.contents);
 
 		//50 seems to be the maximum jump height
-		if ( VectorLength(height) > 45 ) {
+		//if ( VectorLength(height) > 45 ) {
 			// play aerial on attacker
-			attacker->client->ps.persistant[PERS_PLAYEREVENTS] ^= PLAYEREVENT_AERIALREWARD;
-		}
+		//}
 	}
 
 
