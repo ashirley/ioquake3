@@ -661,8 +661,12 @@ void Cmd_Team_f( gentity_t *ent ) {
 	int			oldTeam;
 	char		s[MAX_TOKEN_CHARS];
 
+  oldTeam = ent->client->sess.sessionTeam;
+  if ( team == oldTeam && team != TEAM_SPECTATOR ) {
+    return;
+  }
+
 	if ( trap_Argc() != 2 ) {
-		oldTeam = ent->client->sess.sessionTeam;
 		switch ( oldTeam ) {
 		case TEAM_BLUE:
 			trap_SendServerCommand( ent-g_entities, "print \"Blue team\n\"" );
