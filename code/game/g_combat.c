@@ -1073,16 +1073,15 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
 
     if (tr.fraction == 1.0) {
 			attacker->client->ps.persistant[PERS_PLAYEREVENTS] ^= PLAYEREVENT_AERIALREWARD;
-		  G_Printf( "aerial rocket, high enough:  %f (surface %d, contents %d, allsolid %d, startsolid %d)\n", VectorLength(height), tr.surfaceFlags, tr.contents, tr.allsolid, tr.startsolid);
+		  G_Printf( "aerial rocket, high enough:  %f (surface %d, contents %d, allsolid %d, startsolid %d)\n", tr.fraction, tr.surfaceFlags, tr.contents, tr.allsolid, tr.startsolid);
     }
     else {
 
-		  G_Printf( "aerial rocket, not high enough:  %f (surface %d, contents %d, allsolid %d, startsolid %d)\n", VectorLength(height), tr.surfaceFlags, tr.contents, tr.allsolid, tr.startsolid);
+		  G_Printf( "aerial rocket, not high enough:  %f (surface %d, contents %d, allsolid %d, startsolid %d)\n", tr.fraction, tr.surfaceFlags, tr.contents, tr.allsolid, tr.startsolid);
 		  trap_Trace( &tr, targ->client->ps.origin, targ->r.mins, targ->r.maxs, dest, targ->s.number, MASK_SOLID );
-		  G_Printf( "                              :  %f (surface %d, contents %d, allsolid %d, startsolid %d)\n", VectorLength(height), tr.surfaceFlags, tr.contents, tr.allsolid, tr.startsolid);
+		  G_Printf( "                              :  %f (surface %d, contents %d, allsolid %d, startsolid %d)\n", tr.fraction, tr.surfaceFlags, tr.contents, tr.allsolid, tr.startsolid);
 
     }
-      
 
 
 
