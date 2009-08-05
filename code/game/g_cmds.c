@@ -502,7 +502,7 @@ void BroadcastTeamChange( gclient_t *client, int oldTeam )
 SetTeam
 =================
 */
-void SetTeam( gentity_t *ent, char *s ) {
+qboolean SetTeam( gentity_t *ent, char *s ) {
 	int					team, oldTeam;
 	gclient_t			*client;
 	int					clientNum;
@@ -554,12 +554,12 @@ void SetTeam( gentity_t *ent, char *s ) {
 			if ( team == TEAM_RED && counts[TEAM_RED] - counts[TEAM_BLUE] > 1 ) {
 				trap_SendServerCommand( ent->client->ps.clientNum, 
 					"cp \"Red team has too many players.\n\"" );
-				return; // ignore the request
+				return qfalse; // ignore the request
 			}
 			if ( team == TEAM_BLUE && counts[TEAM_BLUE] - counts[TEAM_RED] > 1 ) {
 				trap_SendServerCommand( ent->client->ps.clientNum, 
 					"cp \"Blue team has too many players.\n\"" );
-				return; // ignore the request
+				return qfalse; // ignore the request
 			}
 
 			// It's ok, the team we are switching to has less or same number of players
@@ -584,7 +584,7 @@ void SetTeam( gentity_t *ent, char *s ) {
 	//
 	oldTeam = client->sess.sessionTeam;
 	if ( team == oldTeam && team != TEAM_SPECTATOR ) {
-		return;
+		return qfalse;
 	}
 
 	//
@@ -633,6 +633,9 @@ void SetTeam( gentity_t *ent, char *s ) {
 	ClientUserinfoChanged( clientNum );
 
 	ClientBegin( clientNum );
+
+  //we did change team
+  return qtrue;
 }
 
 /*
@@ -661,12 +664,8 @@ void Cmd_Team_f( gentity_t *ent ) {
 	int			oldTeam;
 	char		s[MAX_TOKEN_CHARS];
 
-  oldTeam = ent->client->sess.sessionTeam;
-  if ( team == oldTeam && team != TEAM_SPECTATOR ) {
-    return;
-  }
-
 	if ( trap_Argc() != 2 ) {
+    oldTeam = ent->client->sess.sessionTeam;
 		switch ( oldTeam ) {
 		case TEAM_BLUE:
 			trap_SendServerCommand( ent-g_entities, "print \"Blue team\n\"" );
@@ -697,9 +696,9 @@ void Cmd_Team_f( gentity_t *ent ) {
 
 	trap_Argv( 1, s, sizeof( s ) );
 
-	SetTeam( ent, s );
-
-	ent->client->switchTeamTime = level.time + 5000;
+	if (SetTeam( ent, s )) {
+  	ent->client->switchTeamTime = level.time + 5000;
+  }
 }
 
 
