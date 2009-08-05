@@ -6,5 +6,5 @@ cd media
 zip -r ../zzzz-dslmod-`date +"%Y%m%d"`.pk3 *
 
 echo
-echo zzz-dslmod-`date +"%Y%m%d"`.pk3
+echo zzzz-dslmod-`date +"%Y%m%d"`.pk3
 
